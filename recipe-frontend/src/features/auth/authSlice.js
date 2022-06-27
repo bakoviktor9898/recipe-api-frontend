@@ -9,6 +9,17 @@ const initialState = {
   message: "",
 };
 
+export const getUser = createAsyncThunk(
+  "auth/getuser",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.getUser();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const register = createAsyncThunk(
   "auth/register",
   async (user, thunkAPI) => {
@@ -17,7 +28,7 @@ export const register = createAsyncThunk(
     } catch (error) {
       let messages = [];
 
-      for (const [key, value] of Object.entries(error.response.data.errors)) {
+      for (const value of Object.values(error.response.data.errors)) {
         messages = [...messages, value[0]];
       }
       if (messages.length > 0) return thunkAPI.rejectWithValue(messages);
@@ -59,12 +70,19 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
     },
-    a: async (state) => {
+    getUser: (state, action) => {
       state.isError = false;
       state.message = "";
       state.isSuccess = false;
       state.isLoading = false;
-      state.user = authService.getUser();
+      state.user = action.payload;
+    },
+    getUserFail: (state, action) => {
+      state.isError = true;
+      state.message = action.payload;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -104,6 +122,22 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = null;
+        state.message = action.payload;
       });
   },
 });
