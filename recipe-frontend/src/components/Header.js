@@ -61,7 +61,7 @@ const Header = () => {
             <>
               <NavLink
                 to="/profile"
-                className=" hover:bg-teal-700 flex items-center justify-center px-2 gap-[7px]"
+                className="p-2 hover:bg-teal-700 hover:rounded-md flex items-center justify-center px-2 gap-[7px]"
               >
                 <UserIcon className="w-6 h-6" />
                 Profile
