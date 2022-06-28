@@ -9,9 +9,11 @@ const initialState = {
   message: "",
 };
 
-const getAllRecipes = createAsyncThunk("recipe/recipe", async () => {
+export const getAllRecipes = createAsyncThunk("recipe/recipe", async () => {
   try {
-    return await recipeService.getAllRecipes();
+    return await (
+      await recipeService.getAllRecipes()
+    ).data;
   } catch (error) {
     return error.message;
   }
