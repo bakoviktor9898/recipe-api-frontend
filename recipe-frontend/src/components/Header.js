@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
 import "../style/nav.css";
-import { Spinner } from "./Spinner";
+
 import {
   UserIcon,
   LogoutIcon,
@@ -12,8 +12,10 @@ import {
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+
   const navigate = useNavigate();
+
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
