@@ -6,7 +6,7 @@ const recipeClient = axios.create({
 });
 
 const getAllRecipes = async () => {
-  return await recipeClient.get("/api/recipes");
+  return await recipeClient.get("/api/recipe");
 };
 
 const recipeService = {
