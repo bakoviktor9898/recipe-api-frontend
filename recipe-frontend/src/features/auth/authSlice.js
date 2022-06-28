@@ -1,24 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "../../serivces/authService";
 
+const user = localStorage.getItem("user");
+
 const initialState = {
-  user: null,
+  user: user ? user : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-export const getUser = createAsyncThunk(
-  "auth/getuser",
-  async (user, thunkAPI) => {
-    try {
-      return await authService.getUser();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const getUser = createAsyncThunk("auth/getuser", async () => {
+  try {
+    return await authService.getUser();
+  } catch (error) {
+    return error.message;
   }
-);
+});
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -45,7 +44,11 @@ export const register = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await authService.logout();
+  try {
+    return await authService.logout();
+  } catch (error) {
+    return error.message;
+  }
 });
 
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
@@ -70,20 +73,20 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
     },
-    getUser: (state, action) => {
-      state.isError = false;
-      state.message = "";
-      state.isSuccess = false;
-      state.isLoading = false;
-      state.user = action.payload;
-    },
-    getUserFail: (state, action) => {
-      state.isError = true;
-      state.message = action.payload;
-      state.isSuccess = false;
-      state.isLoading = false;
-      state.user = action.payload;
-    },
+    // getUser: (state, action) => {
+    //   state.isError = false;
+    //   state.message = "";
+    //   state.isSuccess = false;
+    //   state.isLoading = false;
+    //   state.user = action.payload;
+    // },
+    // getUserFail: (state, action) => {
+    //   state.isError = true;
+    //   state.message = action.payload;
+    //   state.isSuccess = false;
+    //   state.isLoading = false;
+    //   state.user = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -94,12 +97,14 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(register.rejected, (state, acttion) => {
         state.isLoading = false;
         state.isError = true;
         state.message = acttion.payload;
         state.user = null;
+        localStorage.removeItem("user");
       })
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -108,12 +113,14 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+        localStorage.removeItem("user");
       })
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -122,6 +129,13 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
+        localStorage.removeItem("user");
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = null;
+        state.message = action.error;
       })
       .addCase(getUser.pending, (state) => {
         state.isLoading = true;
@@ -137,11 +151,11 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
-        state.message = action.payload;
+        state.message = action.error;
       });
   },
 });
 
-export const { reset, a } = authSlice.actions;
+export const { reset } = authSlice.actions;
 
 export default authSlice.reducer;
