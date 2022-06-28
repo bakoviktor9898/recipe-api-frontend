@@ -7,8 +7,20 @@ import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "./pages/Profile";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Spinner } from "./components/Spinner";
+import { getUser, reset } from "./features/auth/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="App h-screen w-full bg-slate-200">
       <BrowserRouter>
