@@ -3,6 +3,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
 import "../style/nav.css";
 import { Spinner } from "./Spinner";
+import {
+  UserIcon,
+  LogoutIcon,
+  LoginIcon,
+  UserAddIcon,
+} from "@heroicons/react/outline";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -18,40 +24,57 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-indigo-700">
+    <header className="bg-teal-600">
       <div className="flex justify-between items-center py-4 text-white text-lg ">
         <div className=" flex items-center pl-5">
           <NavLink
             to="/"
-            className=" hover:bg-indigo-900 p-2 flex items-center justify-center hover:rounded-md"
+            className=" hover:bg-teal-700 p-2 flex items-center justify-center hover:rounded-md"
           >
-            Home
+            <img
+              src={require("../images/recipesLogo.png")}
+              width={100}
+              height={200}
+              alt="logo"
+            />
           </NavLink>
         </div>
-        <div className="flex gap-10 pr-6">
-          {!user && (
+        <div className="flex gap-5 pr-6">
+          {!user ? (
             <>
               <NavLink
                 to="/login"
-                className=" hover:rounded-md p-2 hover:bg-indigo-900 "
+                className=" hover:rounded-md p-2 hover:bg-teal-700 flex items-center justify-center px-2 gap-[7px]"
               >
+                <LoginIcon className="w-6 h-6" />
                 Login
               </NavLink>
               <NavLink
                 to="/register"
-                className=" hover:rounded-md p-2 hover:bg-indigo-900"
+                className=" hover:rounded-md p-2 hover:bg-teal-700 flex items-center justify-center px-2 gap-[7px]"
               >
+                <UserAddIcon className="w-6 h-6" />
                 Register
               </NavLink>
             </>
-          )}
-          {user && (
-            <button
-              onClick={(e) => handleLogout(e)}
-              className="hover:rounded-md p-2 hover:bg-indigo-900"
-            >
-              Logout
-            </button>
+          ) : (
+            <>
+              <NavLink
+                to="/profile"
+                className=" hover:bg-teal-700 flex items-center justify-center px-2 gap-[7px]"
+              >
+                <UserIcon className="w-6 h-6" />
+                Profile
+              </NavLink>
+
+              <button
+                onClick={(e) => handleLogout(e)}
+                className="hover:rounded-md p-2 hover:bg-teal-700 flex items-center justify-center px-2 gap-[7px]"
+              >
+                <LogoutIcon className="w-6 h-6" />
+                Logout
+              </button>
+            </>
           )}
         </div>
       </div>
