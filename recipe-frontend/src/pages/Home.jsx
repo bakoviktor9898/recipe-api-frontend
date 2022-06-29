@@ -1,28 +1,38 @@
-import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { getAllRecipes } from "../features/recipe/recipeSlice";
+import { getAllRecipes, reset } from "../features/recipe/recipeSlice";
+import { Spinner } from "../components/Spinner";
+import RecipeItem from "../components/RecipeItem";
 
 const Home = () => {
-  const { user } = useSelector((state) => state.auth);
-  const { recipes } = useSelector((state) => state.recipe);
-  const [re, setRe] = useState([]);
+  const { recipes, isLoading, isError, message } = useSelector(
+    (state) => state.recipe
+  );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!user) navigate("/login");
-    dispatch(getAllRecipes());
-  }, [navigate, user, dispatch]);
 
   useEffect(() => {
-    setRe(recipes);
-  }, [recipes]);
+    dispatch(getAllRecipes());
+    if (isError) console.log(message);
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [isError, message, dispatch]);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div>
-      <h1>Home page</h1>
-      <div></div>
+      <h1>Recipes</h1>
+      <div className="flex h-full flex-wrap items-center justify-center">
+        {recipes?.length > 0 ? (
+          recipes.map((recipe) => {
+            return <RecipeItem key={recipe.id} recipe={recipe} />;
+          })
+        ) : (
+          <h1>0 recipe</h1>
+        )}
+      </div>
     </div>
   );
 };
