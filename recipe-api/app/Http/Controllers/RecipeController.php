@@ -11,12 +11,12 @@ class RecipeController extends Controller
     
     public function index(){
         $recipes = Recipe::all();
-        return response($recipes);
+        return response()->json($recipes,200);
     }
 
     public function show($id){
-        $recipe = Recipe::find($id);
-        return response($recipe);
+        $recipe = Recipe::findOrFail($id);
+        return response()->json($recipe,200);
     }
 
     public function store(RecipeRequest $request){
