@@ -11,6 +11,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "./components/Spinner";
 import { getUser, reset } from "./features/auth/authSlice";
+import PublicRoutes from "./components/PublicRoutes";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import Recipe from "./pages/Recipe";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,14 +25,50 @@ function App() {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="App h-screen w-full bg-slate-200">
+    <div className="App max-h-max min-h-screen bg-slate-200">
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoutes>
+                <Login />
+              </PublicRoutes>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoutes>
+                <Register />
+              </PublicRoutes>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoutes>
+                <Home />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoutes>
+                <Profile />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/recipe/:id"
+            element={
+              <ProtectedRoutes>
+                <Recipe />
+              </ProtectedRoutes>
+            }
+          />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
