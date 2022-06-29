@@ -8,9 +8,13 @@ const recipeClient = axios.create({
 const getAllRecipes = async () => {
   return await recipeClient.get("/api/recipe");
 };
+const findRecipe = async (id) => {
+  return await recipeClient.get(`/api/recipe/${id}`);
+};
 
 const recipeService = {
   getAllRecipes,
+  findRecipe,
 };
 
 export default recipeService;
