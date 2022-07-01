@@ -14,18 +14,19 @@ import { getUser, reset } from "./features/auth/authSlice";
 import PublicRoutes from "./components/PublicRoutes";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Recipe from "./pages/Recipe";
+import NoMatch from "./pages/NoMatch";
 
 function App() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
   useEffect(() => {
-    dispatch(getUser());
+     dispatch(getUser());
   }, [dispatch]);
 
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="App max-h-max min-h-screen bg-slate-200">
+    <div className="App font-sans max-h-max min-h-screen bg-slate-200">
       <BrowserRouter>
         <Header />
         <Routes>
@@ -69,6 +70,7 @@ function App() {
               </ProtectedRoutes>
             }
           />
+          <Route path="*" element={<NoMatch />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
