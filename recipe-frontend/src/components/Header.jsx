@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
-import "../style/nav.css";
+// import "../style/nav.css";
 
 import {
   UserIcon,
@@ -20,9 +20,8 @@ const Header = () => {
     e.preventDefault();
     dispatch(logout());
     dispatch(reset());
-    if (!user) {
-      navigate("/login");
-    }
+    navigate("/login");
+    
   };
 
   return (

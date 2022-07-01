@@ -1,6 +1,6 @@
 export const Spinner = () => {
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center min-h-screen">
       <svg
         role="status"
         className="w-24 h-24 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-teal-600"
