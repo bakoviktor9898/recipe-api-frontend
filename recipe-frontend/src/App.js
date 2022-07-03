@@ -20,13 +20,13 @@ function App() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
   useEffect(() => {
-     dispatch(getUser());
+    dispatch(getUser());
   }, [dispatch]);
 
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="App font-sans max-h-max min-h-screen bg-slate-200">
+    <div className="App font-sans max-h-max min-h-screen bg-grey-200">
       <BrowserRouter>
         <Header />
         <Routes>
