@@ -11,8 +11,11 @@ const RecipeItem = ({ recipe }) => {
   const navigate = useNavigate();
 
   return (
-    <Card className="mt-6 rounded-xl bg-white font-medium m-4 w-[400px] h-96 flex-col items-center justify-evenly text-center">
-      <CardHeader className="text-2xl ">
+    <Card
+      shadow={false}
+      className="mt-6 rounded-xl bg-white font-medium m-4 w-[400px] h-96 flex-col items-center justify-evenly text-center"
+    >
+      <CardHeader shadow={false} className="text-2xl ">
         <span>{recipe.name}</span>
       </CardHeader>
       <CardBody className="text-center mt-0">
