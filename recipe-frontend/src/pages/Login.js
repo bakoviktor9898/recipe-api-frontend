@@ -1,4 +1,5 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
+import { Input } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -59,7 +60,7 @@ export const Login = () => {
                   name="email"
                   type="email"
                   required
-                  className="appearance-none rounded-none relative py-2 sm:py-3 block w-full px-4  border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative py-2 sm:py-3 block w-full px-4  border border-grey-400 placeholder-grey-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                   onChange={(e) =>
                     setLoginForm({ ...loginForm, email: e.target.value })
@@ -75,7 +76,7 @@ export const Login = () => {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none rounded-none py-2 sm:py-3 relative block w-full px-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none py-2 sm:py-3 relative block w-full px-4 border border-grey-400 placeholder-grey-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   onChange={(e) =>
                     setLoginForm({ ...loginForm, password: e.target.value })
