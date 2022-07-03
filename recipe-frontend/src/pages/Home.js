@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Recipes</h1>
+      <h1 className="text-center text-2xl mt-6 mb-3">Recipes</h1>
       <div className="flex h-full flex-wrap items-center justify-center">
         {recipes?.length > 0 ? (
           recipes.map((recipe) => {
