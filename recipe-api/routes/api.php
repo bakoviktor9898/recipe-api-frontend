@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\UserRecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,11 +26,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('recipe',[RecipeController::class,'store']);
     Route::get('recipe/{id}',[RecipeController::class,'show']);
 
-    // User
+    // User actions
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::post('logout', [AuthController::class,'logout']);
+    Route::get('my-recipes',[UserRecipeController::class, 'index']);
 });
 
 // Public routes
