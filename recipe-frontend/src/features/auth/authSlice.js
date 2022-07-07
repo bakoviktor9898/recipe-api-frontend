@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "../../serivces/authService";
 
-// const user = localStorage.getItem("user");
-
 const initialState = {
   user: null,
   isError: false,
@@ -11,13 +9,31 @@ const initialState = {
   message: "",
 };
 
-export const getUser = createAsyncThunk(
-  "auth/getuser",
-  async (user, thunkAPI) => {
+export const getUser = createAsyncThunk("auth/getuser", async (_, thunkAPI) => {
+  try {
+    return await authService.getUser();
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  async (id, thunkAPI) => {
     try {
-      return await authService.getUser();
+      return await authService.deleteUser(id);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -46,11 +62,15 @@ export const register = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     return await authService.logout();
   } catch (error) {
-    return error.message;
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
@@ -76,20 +96,6 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
     },
-    // getUser: (state, action) => {
-    //   state.isError = false;
-    //   state.message = "";
-    //   state.isSuccess = false;
-    //   state.isLoading = false;
-    //   state.user = action.payload;
-    // },
-    // getUserFail: (state, action) => {
-    //   state.isError = true;
-    //   state.message = action.payload;
-    //   state.isSuccess = false;
-    //   state.isLoading = false;
-    //   state.user = action.payload;
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -100,14 +106,12 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        // localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(register.rejected, (state, acttion) => {
         state.isLoading = false;
         state.isError = true;
         state.message = acttion.payload;
         state.user = null;
-        // localStorage.removeItem("user");
       })
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -116,14 +120,12 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        // localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.user = null;
-        // localStorage.removeItem("user");
       })
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -132,7 +134,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
-        // localStorage.removeItem("user");
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
@@ -154,7 +155,23 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
-        state.message = action.error;
+        state.message = action.payload;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message = "";
+        state.user = null;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
