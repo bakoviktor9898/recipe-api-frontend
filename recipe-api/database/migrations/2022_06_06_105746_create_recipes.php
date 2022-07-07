@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete()->onUpdate('cascade');
             $table->string('name', 255);
             $table->integer('kcal');
             $table->integer('preparation_time');
