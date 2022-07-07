@@ -3,7 +3,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router";
 
