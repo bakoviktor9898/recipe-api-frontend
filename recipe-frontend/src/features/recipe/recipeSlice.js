@@ -37,7 +37,7 @@ export const recipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
-    reset: (state) => {
+    resetRecipes: (state) => {
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
@@ -87,6 +87,6 @@ export const recipeSlice = createSlice({
   },
 });
 
-export const { reset } = recipeSlice.actions;
+export const { resetRecipes } = recipeSlice.actions;
 
 export default recipeSlice.reducer;
