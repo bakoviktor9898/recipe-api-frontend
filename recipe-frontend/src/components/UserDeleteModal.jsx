@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { deleteUser, logout, reset } from "../features/auth/authSlice";
+import { Spinner } from "./Spinner";
 
 const UserDeleteModal = ({ show, onClose }) => {
+  const { isLoading, user, message, isError, isSuccess } = useSelector(
+    (state) => state.auth
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) toast.error(message);
+    if (isSuccess) {
+      dispatch(logout());
+      navigate("/login");
+    }
+  }, [isError, dispatch, message, user, isSuccess, navigate]);
+
+  if (isLoading) return <Spinner />;
   if (!show) return null;
 
   const handleOnClose = (e) => {
     if (e.target.id === "container") onClose();
+  };
+
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    dispatch(deleteUser(user.id));
   };
 
   return (
@@ -26,7 +52,10 @@ const UserDeleteModal = ({ show, onClose }) => {
             >
               Cancel
             </button>
-            <button className="rounded-md text-white bg-red-600 px-4 py-2 m-2">
+            <button
+              onClick={(e) => handleDeleteUser(e)}
+              className="rounded-md text-white bg-red-600 px-4 py-2 m-2"
+            >
               Delete
             </button>
           </div>
