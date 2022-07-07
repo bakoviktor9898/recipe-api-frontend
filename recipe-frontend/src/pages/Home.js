@@ -1,23 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRecipes, reset } from "../features/recipe/recipeSlice";
+import { getAllRecipes, resetRecipes } from "../features/recipe/recipeSlice";
 import { Spinner } from "../components/Spinner";
 import RecipeItem from "../components/RecipeItem";
+import { reset } from "../features/auth/authSlice";
 
 const Home = () => {
   const { recipes, isLoading, isError, message } = useSelector(
     (state) => state.recipe
   );
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getAllRecipes());
     if (isError) console.log(message);
-
+    if (user) dispatch(reset());
     return () => {
-      dispatch(reset());
+      dispatch(resetRecipes());
     };
-  }, [isError, message, dispatch]);
+  }, [isError, message, dispatch, user]);
 
   if (isLoading) return <Spinner />;
 
