@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,14 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
            'name' => 'Bakó Viktor',
            'email' => 'bako.viktor9898@gmail.com',
-           'password' => Hash::make('password')   
+           'password' => Hash::make('password'),
+           'created_at' => Carbon::now()  
         ]); 
         DB::table('users')->insert([
            'name' => 'Bakó alex',
            'email' => 'bako.alex@gmail.com',
-           'password' => Hash::make('password')   
+           'password' => Hash::make('password'),
+           'created_at' => Carbon::now()
         ]); 
          DB::table('recipes')->insert([
             'user_id' => 1,
