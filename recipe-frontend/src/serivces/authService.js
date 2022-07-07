@@ -37,11 +37,16 @@ const getUser = async () => {
   return await authClient.get("api/user").then((res) => res.data);
 };
 
+const deleteUser = async (id) => {
+  return await authClient.delete(`api/user/${id}`);
+};
+
 const authService = {
   register,
   getUser,
   login,
   logout,
+  deleteUser,
 };
 
 export default authService;
