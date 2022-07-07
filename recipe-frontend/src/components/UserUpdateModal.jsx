@@ -21,10 +21,10 @@ const UserUpdateModal = ({ show, onClose, user }) => {
           <div>
             <div>
               <div className="my-2 w-full">
-                <Input label="Name" defaultValue={user?.name} />
+                <Input label="Name" defaultValue={user.name} />
               </div>
               <div className="my-2 w-full">
-                <Input label="Email" defaultValue={user?.email} />
+                <Input label="Email" defaultValue={user.email} />
               </div>
               <div className="my-2 w-full">
                 <Input label="Password" />
