@@ -1,5 +1,4 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
-import { Input } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -18,7 +17,6 @@ export const Login = () => {
 
   useEffect(() => {
     if (isError) toast.error(message);
-    // if (isSuccess || user) navigate();
     dispatch(reset());
   }, [isError, isSuccess, navigate, dispatch, user, message]);
 
