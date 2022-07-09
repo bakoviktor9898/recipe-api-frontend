@@ -3,13 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Foundation\Auth\User as AuthUser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,7 +27,7 @@ class UserController extends Controller
 
     }
 
-    public function update(UserRequest $request){
+    public function update(UpdateUserRequest $request){
 
         $data = $request->validated();
         $user = $request->user();
