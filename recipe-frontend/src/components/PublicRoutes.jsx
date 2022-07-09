@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 
 const PublicRoutes = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
