@@ -3,25 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { deleteUser, logout, reset } from "../features/auth/authSlice";
-import { Spinner } from "./Spinner";
 
 const UserDeleteModal = ({ show, onClose }) => {
-  const { isLoading, user, message, isError, isSuccess } = useSelector(
-    (state) => state.auth
-  );
+  const { user, message, isError } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) toast.error(message);
-    if (isSuccess) {
-      dispatch(logout());
-      navigate("/login");
-    }
-  }, [isError, dispatch, message, user, isSuccess, navigate]);
+  }, [isError, dispatch, message, user, navigate]);
 
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
   if (!show) return null;
 
   const handleOnClose = (e) => {
@@ -30,7 +23,8 @@ const UserDeleteModal = ({ show, onClose }) => {
 
   const handleDeleteUser = async (e) => {
     e.preventDefault();
-    dispatch(deleteUser(user.id));
+    await dispatch(deleteUser(user.id));
+    await dispatch(logout());
   };
 
   return (
