@@ -25,20 +25,17 @@ export const Register = () => {
         toast.error(element);
       });
     }
-    if (isSuccess || user) {
-      navigate("/");
-    }
-    dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   if (isLoading) return <Spinner />;
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     if (registerForm.password !== registerForm.password_confirmation) {
       toast.error("Password do not match");
     } else {
-      dispatch(register(registerForm));
+      await dispatch(register(registerForm));
+      await dispatch(reset());
     }
   };
 
