@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
@@ -28,6 +29,16 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Something went wrong'
         ]);
+
+    }
+
+    public function update(UserRequest $request){
+
+        $data = $request->validated();
+        $user = $request->user();
+        $user->update($data);
+
+        return response()->json($user,201);
 
     }
 
