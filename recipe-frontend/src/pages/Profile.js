@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserDeleteModal from "../components/UserDeleteModal";
+import UserRecipeItem from "../components/UserRecipeItem";
 import UserUpdateModal from "../components/UserUpdateModal";
 
 axios.defaults.withCredentials = true;
@@ -28,6 +29,7 @@ const Profile = () => {
       ).data
     );
   };
+
   return (
     <div className="w-screen">
       <h1 className="text-center font-semibold text-2xl my-5">
@@ -60,10 +62,10 @@ const Profile = () => {
         </div>
       </div>
       {userRecipes?.length > 0 && (
-        <>
+        <div className="flex justify-center items-center flex-col mt-8">
           <button
             onClick={() => setHideRecipes(!hideRecipes)}
-            className="bg-teal-600 p-2"
+            className="bg-teal-600 p-2 text-lg text-grey-300"
           >
             {!hideRecipes ? (
               <div className="p-2 flex items-center justify-center px-2 gap-[7px]">
@@ -77,13 +79,13 @@ const Profile = () => {
               </div>
             )}
           </button>
-          <div>
+          <div className="w-full flex flex-wrap justify-center">
             {hideRecipes &&
               userRecipes.map((recipe) => {
-                return <div key={recipe.id}>{recipe.name}</div>;
+                return <UserRecipeItem key={recipe.id} recipe={recipe} />;
               })}
           </div>
-        </>
+        </div>
       )}
       <UserDeleteModal
         onClose={onCloseDeleteModal}
