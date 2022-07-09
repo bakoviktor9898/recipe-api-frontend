@@ -59,33 +59,32 @@ const Profile = () => {
           Update Profile
         </div>
       </div>
-      Welcome {user && user.name} <br />
-      <button
-        onClick={() => setHideRecipes(!hideRecipes)}
-        className="bg-teal-600 p-2"
-      >
-        {!hideRecipes ? (
-          <div className="p-2 flex items-center justify-center px-2 gap-[7px]">
-            <ArrowDownIcon className="w-5 h-5" />
-            Show my recipes
+      {userRecipes?.length > 0 && (
+        <>
+          <button
+            onClick={() => setHideRecipes(!hideRecipes)}
+            className="bg-teal-600 p-2"
+          >
+            {!hideRecipes ? (
+              <div className="p-2 flex items-center justify-center px-2 gap-[7px]">
+                <ArrowDownIcon className="w-5 h-5" />
+                Show my recipes
+              </div>
+            ) : (
+              <div className="p-2 flex items-center gap-[7px] justify-center px-2 ">
+                <ArrowUpIcon className="h-5 w-5" />
+                Hide my recipes
+              </div>
+            )}
+          </button>
+          <div>
+            {hideRecipes &&
+              userRecipes.map((recipe) => {
+                return <div key={recipe.id}>{recipe.name}</div>;
+              })}
           </div>
-        ) : (
-          <div className="p-2 flex items-center gap-[7px] justify-center px-2 ">
-            <ArrowUpIcon className="h-5 w-5" />
-            Hide my recipes
-          </div>
-        )}
-      </button>
-      <div>
-        {hideRecipes &&
-          (userRecipes.length > 0 ? (
-            userRecipes.map((recipe) => {
-              return <div key={recipe.id}>{recipe.name}</div>;
-            })
-          ) : (
-            <>You dont have a recipe</>
-          ))}
-      </div>
+        </>
+      )}
       <UserDeleteModal
         onClose={onCloseDeleteModal}
         show={showUserDeleteModal}
