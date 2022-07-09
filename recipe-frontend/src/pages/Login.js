@@ -10,21 +10,21 @@ import { login, reset } from "../features/auth/authSlice";
 export const Login = () => {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
-  const { user, isError, isLoading, isSuccess, message } = useSelector(
+  const { user, isError, isLoading, message } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) toast.error(message);
-    dispatch(reset());
-  }, [isError, isSuccess, navigate, dispatch, user, message]);
+  }, [isError, navigate, dispatch, user, message]);
 
   if (isLoading) return <Spinner />;
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(login(loginForm));
+    await dispatch(login(loginForm));
+    await dispatch(reset());
   };
 
   return (
