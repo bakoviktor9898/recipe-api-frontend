@@ -32,8 +32,9 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
     //Route::post('logout', [AuthController::class,'logout']);
-    Route::get('my-recipes',[UserRecipeController::class, 'index']);
-    Route::delete('user/{id}',[UserController::class, 'delete']);
+    Route::get('/my-recipes',[UserRecipeController::class, 'index']);
+    Route::delete('/user/{id}',[UserController::class, 'delete']);
+    Route::put('/user',[UserController::class, 'update']);
 });
 
 
