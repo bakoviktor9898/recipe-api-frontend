@@ -1,11 +1,36 @@
 import React from "react";
 import { Input } from "@material-tailwind/react";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { updateUser } from "../features/auth/authSlice";
 
 const UserUpdateModal = ({ show, onClose, user }) => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
   if (!show) return null;
+
+  let userData = {
+    name,
+    email,
+  };
+  if (password !== "") {
+    userData.password = password;
+    userData.password_confirmation = password;
+  }
 
   const handleOnClose = (e) => {
     if (e.target.id === "container") onClose();
+  };
+
+  const handleUpdateUser = async () => {
+    if (password !== passwordConfirmation) return toast.error;
+    await dispatch(updateUser(userData));
+    onClose();
   };
 
   return (
@@ -21,16 +46,30 @@ const UserUpdateModal = ({ show, onClose, user }) => {
           <div>
             <div>
               <div className="my-2 w-full">
-                <Input label="Name" defaultValue={user.name} />
+                <Input
+                  label="Name"
+                  onChange={(e) => setName(e.target.value)}
+                  defaultValue={user.name}
+                />
               </div>
               <div className="my-2 w-full">
-                <Input label="Email" defaultValue={user.email} />
+                <Input
+                  label="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={user.email}
+                />
               </div>
               <div className="my-2 w-full">
-                <Input label="Password" />
+                <Input
+                  onChange={(e) => setPassword(e.target.value)}
+                  label="Password"
+                />
               </div>
               <div className="my-2 w-full">
-                <Input label="Password Confirmation" />
+                <Input
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  label="Password Confirmation"
+                />
               </div>
             </div>
           </div>
@@ -41,7 +80,11 @@ const UserUpdateModal = ({ show, onClose, user }) => {
             >
               Cancel
             </button>
-            <button className="rounded-md bg-yellow-800  text-white px-4 py-2 m-2">
+            <button
+              type="submit"
+              onClick={handleUpdateUser}
+              className="rounded-md bg-yellow-800  text-white px-4 py-2 m-2"
+            >
               Save
             </button>
           </div>
