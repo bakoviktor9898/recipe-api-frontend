@@ -12,6 +12,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import Recipe from "./pages/Recipe";
 import NoMatch from "./pages/NoMatch";
 import PersistUser from "./components/PersistUser";
+import CreateRecipe from "./pages/CreateRecipe";
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <Home />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/recipe/create"
+              element={
+                <ProtectedRoutes>
+                  <CreateRecipe />
                 </ProtectedRoutes>
               }
             />
