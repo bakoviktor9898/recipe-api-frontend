@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function(){
 
     // Recipes
-    Route::get('recipe',[RecipeController::class,'index']);
-    Route::post('recipe',[RecipeController::class,'store']);
+    Route::get('/recipe',[RecipeController::class,'index']);
+    Route::post('/recipe/create',[RecipeController::class,'store']);
     Route::get('recipe/{id}',[RecipeController::class,'show']);
 
     // User actions
