@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import recipeService from "../../serivces/recipesService";
+import recipeService from "../../services/recipesService";
 
 const initialState = {
   recipes: [],

@@ -1,10 +1,9 @@
 import { Input, Textarea } from "@material-tailwind/react";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import authService, { authClient } from "../serivces/authService";
+import { authClient } from "../services/authService";
 
 const CreateRecipe = () => {
   const navigate = useNavigate();
@@ -17,21 +16,24 @@ const CreateRecipe = () => {
 
   const createRecipe = async (e) => {
     e.preventDefault();
-    // if (recipeData.name === "") toast.error("name field is required");
-    // if (recipeData.preparation === "")
-    //   toast.error("preparation field is required");
-    // if (recipeData.preparation_time === "")
-    //   toast.error("preparation time field is required");
-    // if (recipeData.kcal === "") toast.error("kcal field is required");
-    // else {
-    //   const { name, kcal, preparation_time, preparation } = recipeData;
-    //   console.log(name, parseInt(kcal), preparation, preparation_time);
-    // }
+    if (recipeData.name === "") toast.error("name field is required");
+    if (recipeData.preparation === "")
+      toast.error("preparation field is required");
+    if (recipeData.preparation_time === "")
+      toast.error("preparation time field is required");
+    if (recipeData.kcal === "") toast.error("kcal field is required");
+    else {
+      const { name, kcal, preparation_time, preparation } = recipeData;
+      console.log(name, parseInt(kcal), preparation, preparation_time);
+    }
 
-    // await authClient
-    //   .post("/api/recipe/create", data)
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
+    await authClient
+      .post("/api/recipe/create", recipeData)
+      .then((response) => {
+        console.log(response);
+        navigate("/");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
