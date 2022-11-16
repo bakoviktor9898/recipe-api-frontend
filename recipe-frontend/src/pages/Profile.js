@@ -65,7 +65,7 @@ const Profile = () => {
         <div className="flex justify-center items-center flex-col mt-8">
           <button
             onClick={() => setHideRecipes(!hideRecipes)}
-            className="bg-teal-600 p-2 text-lg text-grey-300"
+            className="bg-teal-600 p-2 text-lg text-grey-300 rounded-md"
           >
             {!hideRecipes ? (
               <div className="p-2 flex items-center justify-center px-2 gap-[7px]">
@@ -73,7 +73,7 @@ const Profile = () => {
                 Show my recipes
               </div>
             ) : (
-              <div className="p-2 flex items-center gap-[7px] justify-center px-2 ">
+              <div className="p-2 flex items-center gap-[7px] justify-center px-2">
                 <ArrowUpIcon className="h-5 w-5" />
                 Hide my recipes
               </div>
