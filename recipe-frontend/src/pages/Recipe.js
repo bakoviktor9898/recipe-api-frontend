@@ -27,7 +27,7 @@ const Recipe = () => {
       </button>
       <div className="w-[90%] max-w-[1100px] flex flex-col items-center gap-4 bg-white rounded-lg">
         <h1 className="text-3xl pb-5 pt-8 text-center">{recipe?.name}</h1>
-        <div className="text-xl">Kalória : {recipe?.kcal}</div>
+        <div className="text-xl">Kcal : {recipe?.kcal}</div>
         <div className="text-xl">
           Elkészítési idő: {recipe?.preparation_time}
         </div>
